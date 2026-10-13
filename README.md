@@ -13,6 +13,7 @@ A static Yu-Gi-Oh! probability calculator focused on readable requirements and e
 - Named scenarios and independent comparisons against the same deck.
 - Browser-local persistence, shareable links, and JSON import/export.
 - Responsive layout, keyboard controls, and clear input validation.
+- Dark navy theme with orange accents, following the visual style of [YuGiOh Proxy Generator](https://matpag.github.io/YuGiOhProxyGenerator/).
 
 ## Development
 

@@ -21,5 +21,5 @@ export function Icon({ name, size = 18, style }: { name: keyof typeof paths; siz
 }
 
 export function Logo() {
-  return <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#245c48" /><g fill="none" stroke="#fff" strokeWidth="3"><rect x="14" y="14" width="25" height="35" rx="4" transform="rotate(-12 26 32)" /><rect x="27" y="15" width="23" height="34" rx="4" fill="#245c48" /></g><path d="m38 24 4 7-4 7-4-7z" fill="#e5c783" /></svg>;
+  return <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#e46544" /><g fill="none" stroke="#111a38" strokeWidth="3"><rect x="14" y="14" width="25" height="35" rx="4" transform="rotate(-12 26 32)" /><rect x="27" y="15" width="23" height="34" rx="4" fill="#e46544" /></g><path d="m38 24 4 7-4 7-4-7z" fill="#e6f7f7" /></svg>;
 }

@@ -1,4 +1,36 @@
-:root { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; color: #263b33; background: #faf9f6; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --green: #245c48; --muted: #68736d; --line: #e4e7df; }
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: var(--background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  /* Shared visual language with YuGiOh Proxy Generator. */
+  --background: #1a234c;
+  --surface: #202b55;
+  --surface-inset: #182144;
+  --field: #111a38;
+  --text: #e6f7f7;
+  --muted: #b6c7da;
+  --line: #ffffff1f;
+  --control-border: #7381a5;
+  --accent: #e46544;
+  --accent-hover: #f27b5c;
+  --accent-text: #ffb3a4;
+  --accent-soft: #e4654420;
+  --accent-line: #e4654470;
+  --hover: #ffffff12;
+  --result-surface: #17213f;
+  --success: #99c7a2;
+  --error-surface: #3b283c;
+  --error-border: #a6676c;
+  --focus: #f8fdff;
+  --shadow: #00000026;
+  --popover-shadow: #00000040;
+  --modal-shadow: #00000060;
+  --backdrop: #070d25cc;
+}
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; }
 button, input, select, textarea { font: inherit; }
@@ -8,13 +40,14 @@ button:disabled { cursor: not-allowed; opacity: .45; }
 a { color: inherit; }
 button, input, select, textarea { border-radius: 8px; }
 button { transition: background .15s, border-color .15s, color .15s; }
-input, select, textarea { border: 1px solid #dce1d9; color: #263b33; background: white; min-height: 42px; }
+input, select, textarea { border: 1px solid var(--control-border); color: var(--text); background: var(--field); min-height: 42px; }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: .85; }
 input { padding: 8px 12px; min-width: 0; }
 input[type=number] { font-variant-numeric: tabular-nums; }
-input[aria-invalid=true] { border-color: #bd6a4c; }
+input[aria-invalid=true] { border-color: var(--accent-text); }
 select { padding: 8px 28px 8px 11px; }
 textarea { padding: 12px; width: 100%; resize: vertical; }
-:focus-visible { outline: 3px solid #b39658; outline-offset: 3px; }
-input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #598f76; outline-offset: 1px; }
-::selection { background: #cee3d6; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+::selection { background: var(--accent); color: var(--field); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }

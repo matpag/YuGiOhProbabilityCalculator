@@ -12,7 +12,7 @@ import type { WorkerResult } from './hooks/useProbabilities';
 import styles from './styles/App.module.css';
 
 const REPOSITORY = 'https://github.com/matpag/YuGiOhProbabilityCalculator';
-const colors = ['#3e735d', '#7b80a9', '#cf995f', '#6497a1', '#b3778c', '#8a9263'];
+const colors = ['#e46544', '#96a6e5', '#c895cc', '#7fc4c9', '#e4c17c', '#99c7a2'];
 type Dispatcher = Dispatch<Action>;
 
 export function App() {
