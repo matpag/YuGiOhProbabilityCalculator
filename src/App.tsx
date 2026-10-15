@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
 import type { Dispatch, CSSProperties } from 'react';
 import { Icon, Logo } from './components/Icon';
 import { LIMITS, operatorLabels, describeScenario } from './domain/model';
@@ -30,6 +30,7 @@ export function App() {
   const fixedGroups = state.groups.filter(group => group.kind === 'fixed');
   const scenarioErrors = calculations.scenarioErrors[active.id] ?? [];
   const result = calculations.results[active.id];
+  const activeErrors = calculations.deck.errors.length ? ['Check your deck details to calculate.'] : scenarioErrors;
   const hasContent = state.groups.length > 0 || state.scenarios.some(scenario => scenario.alternatives.some(option => option.requirements.length));
 
   useEffect(() => {
@@ -109,6 +110,8 @@ export function App() {
 
       {notice && <div className={styles.notice} role="status"><Icon name="info" /><span>{notice}</span><button className={styles.iconButton} onClick={() => setNotice('')} aria-label="Dismiss message"><Icon name="close" size={16} /></button></div>}
 
+      {hasContent && <MobileResultSummary scenario={active} result={result} errors={activeErrors} pending={calculations.pending} deckInvalid={!!calculations.deck.errors.length} />}
+
       <div className={styles.workspace}>
         <section className={styles.panel} aria-labelledby="deck-title">
           <div className={styles.panelHeading}><div className={styles.step}>01</div><div><h2 id="deck-title">Your deck</h2><p>Add individual cards or groups of cards.</p></div></div>
@@ -152,7 +155,7 @@ export function App() {
           </div>
           <Requirements scenario={active} groups={fixedGroups} dispatch={dispatch} />
           {active.alternatives.length < LIMITS.alternatives && active.alternatives[0].requirements.length > 0 && <button className={styles.alternativeButton} onClick={() => dispatch({ type: 'alternative:add' })}><Icon name="plus" size={15} /> Add an alternative opening <span>OR</span></button>}
-          <Result state={state} scenario={active} result={result} errors={calculations.deck.errors.length ? ['Check your deck details to calculate.'] : scenarioErrors} pending={calculations.pending} />
+          <Result state={state} scenario={active} result={result} errors={activeErrors} pending={calculations.pending} />
         </section>
       </div>
 
@@ -240,7 +243,7 @@ function Result({ state, scenario, result, errors, pending }: { state: Calculato
   const ready = !errors.length && probability !== undefined;
   const empty = !state.groups.length || scenario.alternatives.every(option => option.requirements.length === 0);
   const message = errors[0] || result?.error;
-  return <div className={styles.result} aria-busy={pending && !errors.length}>
+  return <div id="opening-result" className={styles.result} tabIndex={-1} aria-busy={pending && !errors.length}>
     <div className={styles.resultEyebrow}><span className={styles.resultDot} /> YOUR CHANCE TO DRAW THIS HAND <span className={styles.exactBadge}>Exact</span></div>
     <div className={styles.resultValue} aria-live="polite" aria-atomic="true">{ready ? <span>{formatProbability(probability)}</span> : pending && !errors.length ? <span className={styles.pendingText}>Calculating…</span> : '—'}{ready && <small>{probability === 0 ? 'No hands meet these requirements.' : probability === 1 ? 'Every hand meets these requirements.' : probability < 0.01 ? 'Fewer than 1 in 100 hands.' : probability > 0.99 ? 'More than 99 in 100 hands.' : `About ${Math.round(probability * 100)} in 100 hands.`}</small>}</div>
     {ready ? <>
@@ -252,6 +255,18 @@ function Result({ state, scenario, result, errors, pending }: { state: Calculato
   </div>;
 }
 
+function MobileResultSummary({ scenario, result, errors, pending, deckInvalid }: { scenario: Scenario; result?: WorkerResult; errors: string[]; pending: boolean; deckInvalid: boolean }) {
+  const probability = result?.result?.probability;
+  const ready = !errors.length && probability !== undefined;
+  const empty = scenario.alternatives.every(option => option.requirements.length === 0);
+  const status = ready ? 'Your chance' : deckInvalid ? 'Check deck' : empty ? 'Add a requirement' : result?.error ? 'Calculation unavailable' : errors.length ? 'Check requirements' : pending ? 'Calculating…' : 'Add a requirement';
+  return <aside className={styles.mobileSummary} aria-label="Current opening probability">
+    <div><span className={styles.mobileScenario} title={scenario.name.trim() || 'Untitled scenario'}>{scenario.name.trim() || 'Untitled scenario'}</span><span className={styles.mobileStatus}>{status}</span></div>
+    <strong>{ready ? formatProbability(probability) : '—'}</strong>
+    <a href="#opening-result">View result <Icon name="arrow" size={14} /></a>
+  </aside>;
+}
+
 function ErrorList({ errors, id }: { errors: string[]; id: string }) {
   if (!errors.length) return null;
   return <div className={styles.errors} id={id} role="status">{errors.map(error => <p key={error}><Icon name="info" size={15} /><span>{error}</span></p>)}</div>;
@@ -259,6 +274,14 @@ function ErrorList({ errors, id }: { errors: string[]; id: string }) {
 
 function Modal({ title, children, onClose }: { title: string; children: React.ReactNode; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => { ref.current?.showModal(); }, []);
-  return <dialog className={styles.modal} ref={ref} onCancel={onClose} onClick={event => { if (event.target === ref.current) { const rect = ref.current.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) onClose(); } }} aria-labelledby="modal-title"><div className={styles.modalHeading}><h2 id="modal-title">{title}</h2><button className={styles.iconButton} onClick={onClose} aria-label="Close dialog"><Icon name="close" /></button></div>{children}</dialog>;
+  useLayoutEffect(() => {
+    const dialog = ref.current!;
+    const opener = document.activeElement;
+    dialog.showModal();
+    return () => {
+      dialog.close();
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus({ preventScroll: true });
+    };
+  }, []);
+  return <dialog className={styles.modal} ref={ref} onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => { if (event.target === ref.current) { const rect = ref.current.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) onClose(); } }} aria-labelledby="modal-title"><div className={styles.modalHeading}><h2 id="modal-title">{title}</h2><button className={styles.iconButton} onClick={onClose} aria-label="Close dialog"><Icon name="close" /></button></div>{children}</dialog>;
 }
