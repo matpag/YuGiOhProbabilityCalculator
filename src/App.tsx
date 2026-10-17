@@ -94,7 +94,6 @@ export function App() {
           <a href="https://retroformats.com/breakdown/">Breakdown Generator</a>
         </nav></details>
         <button className={styles.textButton} onClick={() => setHelpOpen(true)} aria-label="How it works"><Icon name="info" /><span>How it works</span></button>
-        <a className={styles.iconButton} href={REPOSITORY} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Icon name="github" size={21} /></a>
       </div>
     </header>
 
