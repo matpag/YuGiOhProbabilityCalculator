@@ -1,1 +1,3 @@
 * text=auto eol=lf
+public/retroformats/retroformats.css -text
+public/retroformats/retroformats-mark.svg -text

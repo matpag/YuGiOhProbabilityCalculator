@@ -6,7 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
-  use: { baseURL: 'http://127.0.0.1:4173/YuGiOhProbabilityCalculator/', trace: 'retain-on-failure' },
+  use: { baseURL: 'http://127.0.0.1:4173/YuGiOhProbabilityCalculator/', trace: 'retain-on-failure', channel: process.env.PLAYWRIGHT_CHANNEL || undefined },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium' } },

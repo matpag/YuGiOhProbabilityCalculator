@@ -83,9 +83,16 @@ export function App() {
 
   return <div className={styles.app}>
     <a href="#calculator" className={styles.skipLink}>Skip to calculator</a>
-    <header className={styles.header}>
-      <a className={styles.brand} href={import.meta.env.BASE_URL} aria-label="Opening Hand home"><Logo /><span>Opening Hand<small>YU-GI-OH! PROBABILITY CALCULATOR</small></span></a>
+    <header className={`${styles.header} rf-suite-header`}>
+      <a className="rf-brand" href="https://retroformats.com/" aria-label="Retroformats home"><img className="rf-brand__mark" src={`${import.meta.env.BASE_URL}retroformats/retroformats-mark.svg`} alt="" /><span>retroformats<span className="rf-brand__dot">.</span><small className="rf-brand__product">Probability Calculator</small></span></a>
       <div className={styles.headerActions}>
+        <details className="rf-suite-switcher"><summary>Tools <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary><nav className="rf-suite-nav" aria-label="Retroformats tools">
+          <a href="https://retroformats.com/">Retroformats home</a>
+          <a href="https://retroformats.com/probability/" aria-current="page">Probability Calculator</a>
+          <a href="https://retroformats.com/proxy/">Proxy Generator</a>
+          <a href="https://retroformats.com/decklist/">Decklist Generator</a>
+          <a href="https://retroformats.com/breakdown/">Breakdown Generator</a>
+        </nav></details>
         <button className={styles.textButton} onClick={() => setHelpOpen(true)} aria-label="How it works"><Icon name="info" /><span>How it works</span></button>
         <a className={styles.iconButton} href={REPOSITORY} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Icon name="github" size={21} /></a>
       </div>
@@ -104,7 +111,7 @@ export function App() {
               <button className={styles.menuCancel} onClick={() => setExamplesOpen(false)}>Cancel</button>
             </div>}
           </div>
-          <button className={styles.primaryButton} onClick={share}><Icon name="link" /> Share calculation</button>
+          <button className={`${styles.primaryButton} rf-action-primary`} onClick={share}><Icon name="link" /> Share calculation</button>
         </div>
       </div>
 

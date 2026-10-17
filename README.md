@@ -17,6 +17,8 @@ A static Yu-Gi-Oh! probability calculator focused on readable requirements and e
 
 ## Development
 
+The visual foundation is shared with the Retroformats suite and served locally from `public/retroformats/`. Keep these assets identical to the canonical `design-system/` files in the Retroformats portal. The calculator stays dark-only; probability logic and saved calculation formats are independent of the suite header.
+
 Requires Node.js 22.12 or newer (CI uses Node 24).
 
 ```sh

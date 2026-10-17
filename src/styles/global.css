@@ -1,38 +1,38 @@
 :root {
   color-scheme: dark;
-  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--rf-font);
   color: var(--text);
   background: var(--background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  /* Shared visual language with YuGiOh Proxy Generator. */
-  --background: #1a234c;
-  --surface: #202b55;
-  --surface-inset: #182144;
-  --field: #111a38;
-  --text: #e6f7f7;
-  --muted: #b6c7da;
-  --line: #ffffff1f;
-  --control-border: #7381a5;
-  --accent: #e46544;
-  --accent-hover: #f27b5c;
-  --accent-text: #ffb3a4;
-  --accent-soft: #e4654420;
-  --accent-line: #e4654470;
-  --hover: #ffffff12;
-  --result-surface: #17213f;
-  --success: #99c7a2;
-  --error-surface: #3b283c;
-  --error-border: #a6676c;
-  --focus: #f8fdff;
-  --shadow: #00000026;
+  /* Canonical foundation is served locally from public/retroformats/. */
+  --background: var(--rf-background);
+  --surface: var(--rf-surface);
+  --surface-inset: var(--rf-surface-inset);
+  --field: var(--rf-field);
+  --text: var(--rf-text);
+  --muted: var(--rf-muted);
+  --line: var(--rf-line);
+  --control-border: var(--rf-control-border);
+  --accent: var(--rf-accent);
+  --accent-hover: var(--rf-accent-hover);
+  --accent-text: var(--rf-accent-text);
+  --accent-soft: var(--rf-accent-soft);
+  --accent-line: var(--rf-accent-line);
+  --hover: var(--rf-hover);
+  --result-surface: var(--rf-result-surface);
+  --success: var(--rf-success);
+  --error-surface: var(--rf-error-surface);
+  --error-border: var(--rf-error-border);
+  --focus: var(--rf-focus);
+  --shadow: var(--rf-shadow);
   --popover-shadow: #00000040;
   --modal-shadow: #00000060;
-  --backdrop: #070d25cc;
+  --backdrop: var(--rf-backdrop);
 }
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; }
+body { margin: 0; min-width: 320px; background: var(--background); }
 button, input, select, textarea { font: inherit; }
 button, a, input, select, summary, textarea { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
