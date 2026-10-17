@@ -19,6 +19,12 @@ A static Yu-Gi-Oh! probability calculator focused on readable requirements and e
 
 The visual foundation is shared with the Retroformats suite and served locally from `public/retroformats/`. Keep these assets identical to the canonical `design-system/` files in the Retroformats portal. The calculator stays dark-only; probability logic and saved calculation formats are independent of the suite header.
 
+### Retroformats handoff (2026-10-17)
+
+Continue work in this repository on `master`. The visual alignment is committed here and published on GitHub Pages; the portal's `.local/worktrees/` directories were temporary implementation copies. The canonical kit and cross-app verification report live in the sibling `YuGiOh Retroformatsdotcom/design-system/` and `YuGiOh Retroformatsdotcom/docs/visual-alignment-verification.md`.
+
+The suite header links to the portal and its four shortlinks. Keep the shared CSS/SVG byte-identical; put calculator-specific changes in `src/styles/global.css` and `src/styles/App.module.css`. No light theme was added. The completed checks included 18 unit tests, 12 calculator browser tests and the suite's 13 browser tests / 101 consistency checks. Use the commands below for future relevant changes.
+
 Requires Node.js 22.12 or newer (CI uses Node 24).
 
 ```sh
