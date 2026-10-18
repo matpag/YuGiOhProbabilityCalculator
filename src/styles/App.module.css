@@ -172,3 +172,15 @@
 @media (max-width: 760px) { .header { height: 78px; padding: 0 20px; } .brand { font-size: 19px; gap: 9px; } .brand small { font-size: 8px; letter-spacing: 1px; } .headerActions { gap: 10px; } .headerActions .textButton span { display: none; } .headerActions .textButton { width: 34px; } .main { padding: 33px 20px 20px; } .intro { flex-direction: column; gap: 21px; margin-bottom: 25px; } .intro h1 { font-size: 34px; } .intro p { font-size: 13px; } .introActions { flex-direction: row; width: 100%; } .introActions > * { flex: 1; } .introActions .secondaryButton { width: 100%; } .primaryButton, .secondaryButton { font-size: 11px; padding: 10px; } .workspace { grid-template-columns: 1fr; gap: 18px; } .panel { padding: 22px; } .requirementRow > .requirementGroup { order: initial; flex-basis: 0; } .requirementRow > .iconButton { order: initial; } .requirementRow:has(.toLabel) > .requirementGroup { order: 2; flex-basis: calc(100% - 34px); } .requirementRow:has(.toLabel) > .iconButton { order: 3; } .resultValue { font-size: 56px; } .bottomBar { flex-wrap: wrap; margin-top: 12px; margin-bottom: 25px; } .bottomBar > div { gap: 12px; } .footer { flex-direction: column; gap: 8px; } .comparisonProbability { font-size: 19px; gap: 8px; } }
 @media (max-width: 420px) { .main { padding: 28px 14px 18px; } .header { padding: 0 14px; } .brand { font-size: 18px; } .brand small { font-size: 7px; } .headerActions { gap: 4px; } .panel { padding: 18px; } .intro h1 { font-size: 31px; letter-spacing: -1.2px; } .eyebrow { font-size: 9px; } .introActions { gap: 7px; } .introActions button { font-size: 10px; } .introActions button svg { width: 14px; } .requirementRow > .requirementGroup { order: 2; flex-basis: calc(100% - 34px); } .requirementRow > .iconButton { order: 3; } .result { padding: 17px; } .resultEyebrow { font-size: 8px; letter-spacing: .4px; } .resultValue { font-size: 51px; } .exampleMenu { right: auto; left: 0; } .groupLabels, .groupRow { grid-template-columns: minmax(0, 1fr) 62px 28px; gap: 6px; } .groupRow .iconButton { width: 28px; min-width: 28px; } .remainder > div:first-child { grid-template-columns: 9px 1fr 62px 28px; gap: 6px; } .desktopBreak { display: none; } .bottomBar { flex-direction: column; align-items: flex-start; gap: 4px; } .modal { padding: 21px; } }
 @media (max-width: 420px) { .header { height: auto; min-height: 82px; gap: 8px; } .headerActions { gap: 4px; } .headerActions > a { display: none; } }
+
+/* Localized labels may wrap; calculator state and document rendering stay independent. */
+.header { height: auto; min-height: 94px; flex-wrap: wrap; row-gap: 12px; }
+.headerActions { flex-wrap: wrap; justify-content: flex-end; }
+.introActions > * { min-width: 0; }
+.introActions button { white-space: normal; }
+.resultEyebrow, .resultMeta { flex-wrap: wrap; }
+@media (max-width: 760px) {
+  .header { padding-top: 14px; padding-bottom: 14px; }
+  .headerActions { position: relative; width: 100%; justify-content: space-between; gap: 8px; }
+  .headerActions > :global(.rf-suite-switcher) { position: static; }
+}

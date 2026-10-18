@@ -1,5 +1,6 @@
 import { emptyState, LIMITS } from '../domain/model';
 import type { CalculatorState } from '../domain/model';
+import type { UiMessage } from '../i18n/messages';
 
 export const STORAGE_KEY = 'opening-hand:v1';
 const MAX_PAYLOAD = 100_000;
@@ -52,16 +53,16 @@ export function decodeState(hash: string): CalculatorState | null {
   } catch { return null; }
 }
 
-export function loadState(): { state: CalculatorState; notice: string } {
+export function loadState(): { state: CalculatorState; notice: UiMessage | null } {
   if (window.location.hash.startsWith('#v1=')) {
     const state = decodeState(window.location.hash);
-    if (state) return { state, notice: 'Shared calculation loaded.' };
-    return { state: emptyState(), notice: 'This shared link is invalid. You can start a new calculation below.' };
+    if (state) return { state, notice: { key: 'notice.sharedLoaded' } };
+    return { state: emptyState(), notice: { key: 'notice.invalidEntry' } };
   }
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     const state = saved ? parseState(saved) : null;
-    if (state) return { state, notice: '' };
+    if (state) return { state, notice: null };
   } catch { /* The calculator remains usable when storage is unavailable. */ }
-  return { state: emptyState(), notice: '' };
+  return { state: emptyState(), notice: null };
 }

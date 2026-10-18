@@ -12,3 +12,7 @@
 - `docs/` is intentionally ignored. Use it for local notes, reasoning, and memory; do not force-add it.
 - Verification: `npm test`, `npm run build`, and `npm run test:e2e` for meaningful behavior changes. CI runs them before deployment.
 - Never commit credentials, build artifacts, browser screenshots, or dependency directories.
+- UI languages are EN/IT/DE/ES/FR through typed dictionaries and React context in `src/i18n/`; never translate by mutating rendered DOM text.
+- Language precedence is valid `ui_lang` > valid `retroformats-ui-language` storage > first supported browser preference > English. Manual changes replace the URL query while preserving other parameters/hash; suite and share links carry the selected language. Catch unavailable storage.
+- Keep language outside calculator state, worker keys and JSON/hash v1 schemas. Preserve entered names, original stored/default/example labels, incomplete numeric strings and exact counts. Localize UI descriptions, validation, notifications and worker failure codes without changing the combinatorial engine.
+- Keep all five dictionary keys and placeholders complete. Run the localization unit and browser coverage alongside the existing English tests when changing interface text or language behavior.

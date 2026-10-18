@@ -13,6 +13,7 @@ A static Yu-Gi-Oh! probability calculator focused on readable requirements and e
 - Named scenarios and independent comparisons against the same deck.
 - Browser-local persistence, shareable links, and JSON import/export.
 - Responsive layout, keyboard controls, and clear input validation.
+- Complete English, Italian, German, Spanish and French interface, including help, validation and calculation messages.
 - Dark navy theme with orange accents, following the visual style of [YuGiOh Proxy Generator](https://matpag.github.io/YuGiOhProxyGenerator/).
 
 ## Development
@@ -42,6 +43,14 @@ npm run test:e2e
 ```
 
 `npm run preview` serves the production build locally. `docs/` is ignored by Git and is available for local development notes and memory.
+
+## Interface languages
+
+The language selector uses native language names. The initial choice follows a supported `ui_lang` query parameter, then the `retroformats-ui-language` browser preference, then the first supported browser language, and finally English. Blocked browser storage does not prevent using the calculator. A manual change updates `ui_lang` without reloading or discarding other query parameters and anchors. Suite links and shared calculations carry the selected language.
+
+Versioned dictionaries live in `src/i18n/locales/`; a typed React context supplies translations, accessible labels and localized number formatting. Validation and scenario descriptions accept a pure translator. Workers return language-independent failure codes, so errors and existing notifications change language with the rest of the interface. Language is outside the calculator state and worker calculation key. Incomplete numeric edits, existing results, card/group names, scenario names, original example labels and JSON/`#v1` payloads are preserved verbatim. The combinatorial engine remains unchanged.
+
+`npm test` checks dictionary keys/placeholders, language precedence, URL propagation, validation, state integrity and exact counts. `npm run test:e2e` includes the original English flows plus all five languages, dialog/ARIA content, preserved results and edits, storage failures, shared links and worker errors. Use `PLAYWRIGHT_CHANNEL=msedge` when running against an installed Microsoft Edge browser.
 
 ## Probability model
 

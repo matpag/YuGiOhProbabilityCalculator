@@ -1,3 +1,6 @@
+import { english } from '../i18n/messages';
+import type { Translator } from '../i18n/messages';
+
 export type Operator = 'atLeast' | 'exactly' | 'atMost' | 'between';
 export type RoleMode = 'allocate' | 'membership';
 
@@ -95,14 +98,13 @@ export const operatorLabels: Record<Operator, string> = {
   atLeast: 'At least', exactly: 'Exactly', atMost: 'At most', between: 'Between',
 };
 
-export function describeRequirement(requirement: Requirement, groups: CardGroup[]): string {
-  const name = groups.find(group => group.id === requirement.groupId)?.name.trim() || 'a group';
-  if (requirement.operator === 'between') return `between ${requirement.value || '…'} and ${requirement.upper || '…'} ${name}`;
-  return `${operatorLabels[requirement.operator].toLowerCase()} ${requirement.value || '…'} ${name}`;
+export function describeRequirement(requirement: Requirement, groups: CardGroup[], t: Translator = english): string {
+  const name = groups.find(group => group.id === requirement.groupId)?.name.trim() || t('description.group');
+  return t(`description.${requirement.operator}`, { name, value: requirement.value || '…', upper: requirement.upper || '…' });
 }
 
-export function describeScenario(scenario: Scenario, groups: CardGroup[]): string {
+export function describeScenario(scenario: Scenario, groups: CardGroup[], t: Translator = english): string {
   return scenario.alternatives.map(alternative =>
-    alternative.requirements.map(requirement => describeRequirement(requirement, groups)).join(' and '),
-  ).filter(Boolean).join(' OR ');
+    alternative.requirements.map(requirement => describeRequirement(requirement, groups, t)).join(t('description.and')),
+  ).filter(Boolean).join(t('description.or'));
 }
